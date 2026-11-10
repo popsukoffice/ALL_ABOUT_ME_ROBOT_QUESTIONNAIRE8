@@ -5019,11 +5019,22 @@ window.addEventListener("beforeunload", function(e) {
       toggle.textContent = 'Exit test navigation';
       toggle.setAttribute('aria-pressed', 'true');
       document.getElementById('sendBtn').disabled = true;
+      (function () {
+        let note = document.getElementById('testNavNote');
+        if (!note) {
+          note = document.createElement('div');
+          note.id = 'testNavNote';
+          note.className = 'send-error';
+          note.textContent = 'Send is switched off while Test navigation is on. Press \u201CExit test navigation\u201D at the top of the page to send for real.';
+          const sb = document.getElementById('sendBtn');
+          sb.parentNode.insertBefore(note, sb.nextSibling);
+        }
+      })();
       rail.scrollIntoView?.({block:'start', inline:'nearest', behavior:'instant'});
       showToast('Choose a section at the top. Test answers are not autosaved.');
     });
     toggle.setAttribute('aria-pressed', 'false');
-    document.querySelector('.top-bar-row3').append(toggle);
+    if (/[?&]test(=|&|$)/.test(location.search)) document.querySelector('.top-bar-row3').append(toggle);
     document.querySelector('.wrapper').prepend(rail);
   }
   function partFor(step) {
