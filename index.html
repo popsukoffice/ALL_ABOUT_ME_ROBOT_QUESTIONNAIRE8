@@ -2330,12 +2330,16 @@ function sendToEP() {
   if (!email || !validEmail(email)) {
     err.textContent = "Please go back to \u2018Before You Start\u2019 and type the adult's email address correctly.";
     err.classList.remove("hidden");
+    try { err.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e0) {}
+    showToast(err.textContent);
     return;
   }
   err.classList.add("hidden");
   if (!val("pupilName")) {
     err.textContent = "Please go back to \u2018About You\u2019 and write your name first.";
     err.classList.remove("hidden");
+    try { err.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e0) {}
+    showToast(err.textContent);
     return;
   }
   var btn = document.getElementById("sendBtn");
